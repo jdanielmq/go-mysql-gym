@@ -8,26 +8,22 @@ import (
 
 func main() {
 	db.Connect()
-	fmt.Println(db.ExistsTable("estado"))
+	fmt.Println(db.ExistsTable("instructor"))
 	//medioPago := models.CreateTipoPago("Cta Rut", true)
-	estados := models.ListEstados()
-	fmt.Println(estados)
+	instructores := models.ListInstructores()
+	fmt.Println(instructores)
 
-	estado := models.CreateEstado("Habilitado", true)
-	fmt.Println(estado)
+	instructor := models.CreateInstructor("Ayax GrossPellier", true)
+	fmt.Println(instructor)
 
-	estado = models.CreateEstado("DesaHabilitado", true)
-	fmt.Println(estado)
+	instructor = models.CreateInstructor("Gaston GrossPellier", true)
+	fmt.Println(instructor)
 
-	estado = models.CreateEstado("Pendiente", true)
-	fmt.Println(estado)
+	instructor = models.CreateInstructor("Luis Quezadas", true)
+	fmt.Println(instructor)
 
-	estado = models.CreateEstado("Suspendido", false)
-	fmt.Println(estado)
-
-	estados = models.ListEstados()
-	fmt.Println(estados)
-
+	instructores = models.ListInstructores()
+	fmt.Println(instructores)
 	//db.Ping()
 	db.Close()
 }
