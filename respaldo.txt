@@ -46,3 +46,40 @@
 
 	socios = models.ListSocios()
 	fmt.Println(socios)
+
+     #################################### INSTRUCTORES ############################
+
+    instructores := models.ListInstructores()
+	fmt.Println(instructores)
+
+	instructor := models.CreateInstructor("Ayax GrossPellier", true)
+	fmt.Println(instructor)
+
+	instructor = models.CreateInstructor("Gaston GrossPellier", true)
+	fmt.Println(instructor)
+
+	instructor = models.CreateInstructor("Luis Quezadas", true)
+	fmt.Println(instructor)
+
+	instructores = models.ListInstructores()
+	fmt.Println(instructores)
+
+
+    #################################### SUSCRIPCIONES ############################
+
+	suscripciones := models.ListSuscripciones()
+	fmt.Println(suscripciones)
+
+	timecurrent := (time.Now()).Format(time.RFC3339Nano)
+	fmt.Println(timecurrent)
+
+	suscripcion := models.CreateSuscripcion(timecurrent, "456789765", 1, 1, 30000, 20000, 3, timecurrent, 1, "1-9")
+	fmt.Println(suscripcion)
+
+	suscripciones = models.ListSuscripciones()
+	fmt.Println(suscripciones)
+
+  #################################### SUSCRIPCIONES ############################
+  
+
+

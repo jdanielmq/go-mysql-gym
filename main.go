@@ -4,26 +4,25 @@ import (
 	"fmt"
 	"go-mysql-gym/db"
 	"go-mysql-gym/models"
+	"time"
 )
 
 func main() {
 	db.Connect()
-	fmt.Println(db.ExistsTable("instructor"))
+	fmt.Println(db.ExistsTable("inbody"))
 	//medioPago := models.CreateTipoPago("Cta Rut", true)
-	instructores := models.ListInstructores()
-	fmt.Println(instructores)
 
-	instructor := models.CreateInstructor("Ayax GrossPellier", true)
-	fmt.Println(instructor)
+	inbodys := models.ListInbodys()
+	fmt.Println(inbodys)
 
-	instructor = models.CreateInstructor("Gaston GrossPellier", true)
-	fmt.Println(instructor)
+	timecurrent := (time.Now()).Format(time.RFC3339Nano)
+	fmt.Println(timecurrent)
 
-	instructor = models.CreateInstructor("Luis Quezadas", true)
-	fmt.Println(instructor)
+	//inbody := models.CreateInbody("14125469-3", false, "{\"key\": \"value\"}", timecurrent, "comentarios", 2)
+	//fmt.Println(inbody)
 
-	instructores = models.ListInstructores()
-	fmt.Println(instructores)
+	//inbodys = models.ListInbodys()
+	//fmt.Println(inbodys)
 	//db.Ping()
 	db.Close()
 }
