@@ -3,9 +3,9 @@ package models
 import "go-mysql-gym/db"
 
 type Instructor struct {
-	IdInstructor     int64
-	NombreInstructor string
-	Habilitado       bool
+	IdInstructor     int64  `json:"id_instructor"`
+	NombreInstructor string `json:"nombre_instructor"`
+	Habilitado       bool   `json:"habilitado"`
 }
 
 type Instructores []Instructor

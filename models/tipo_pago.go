@@ -3,9 +3,9 @@ package models
 import "go-mysql-gym/db"
 
 type TipoPago struct {
-	IdPago      int64
-	Descripcion string
-	Estado      bool
+	IdPago      int64  `json:"id_pago"`
+	Descripcion string `json:"descripcion"`
+	Estado      bool   `json:"estado"`
 }
 
 type MediosPagos []TipoPago

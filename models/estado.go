@@ -3,9 +3,9 @@ package models
 import "go-mysql-gym/db"
 
 type Estado struct {
-	IdEstado    int64
-	Descripcion string
-	Habilitado  bool
+	IdEstado    int64  `json:"id_estado"`
+	Descripcion string `json:"descripcion"`
+	Habilitado  bool   `json:"habilitado"`
 }
 
 type Estados []Estado

@@ -6,14 +6,14 @@ import (
 )
 
 type Socio struct {
-	Rut             string
-	Nombres         string
-	ApellidoPaterno string
-	ApellidoMaterno string
-	Genero          string
-	Correo          string
-	Celular         string
-	Habilitado      bool
+	Rut             string `json:"rut"`
+	Nombres         string `json:"nombres"`
+	ApellidoPaterno string `json:"apellido_paterno"`
+	ApellidoMaterno string `json:"apellido_materno"`
+	Genero          string `json:"genero"`
+	Correo          string `json:"correo"`
+	Celular         string `json:"celular"`
+	Habilitado      bool   `json:"habilitado"`
 }
 
 type Socios []Socio

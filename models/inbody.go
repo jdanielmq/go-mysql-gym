@@ -6,13 +6,13 @@ import (
 )
 
 type InBody struct {
-	IdBody          int64
-	IdSocio         string
-	Habilitado      bool
-	JsonInbody      string
-	FechaEvaluacion string
-	Comentario      string
-	IdInstructor    int64
+	IdBody          int64  `json:"id_body"`
+	IdSocio         string `json:"id_socio"`
+	Habilitado      bool   `json:"habilitado"`
+	JsonInbody      string `json:"json_inbody"`
+	FechaEvaluacion string `json:"fecha_evaluacion"`
+	Comentario      string `json:"comentario"`
+	IdInstructor    int64  `json:"id_instructor"`
 }
 
 type Inbodys []InBody

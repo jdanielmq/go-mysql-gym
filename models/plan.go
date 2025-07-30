@@ -3,13 +3,13 @@ package models
 import "go-mysql-gym/db"
 
 type Plan struct {
-	IdPlan         int64
-	TipoPlan       string
-	MontoPlan      int64
-	Duracion       int
-	Unidad         string
-	IsMatricula    bool
-	MontoMatricula int64
+	IdPlan         int64  `json:"id_plan"`
+	TipoPlan       string `json:"tipo_plan"`
+	MontoPlan      int64  `json:"monto_plan"`
+	Duracion       int    `json:"duracion"`
+	Unidad         string `json:"unidad"`
+	IsMatricula    bool   `json:"isMatricula"`
+	MontoMatricula int64  `json:"monto_matricula"`
 }
 
 type Planes []Plan

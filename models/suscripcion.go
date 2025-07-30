@@ -3,17 +3,17 @@ package models
 import "go-mysql-gym/db"
 
 type Suscripcion struct {
-	IdSuscripcion  int64
-	FechaCreacion  string
-	NroTransaccion string
-	IdPago         int64
-	IdPlan         int64
-	MontoPlan      int64
-	MontoMatricula int64
-	NroCuotas      int
-	FechaTermino   string
-	IdEstado       int64
-	IdSocio        string
+	IdSuscripcion  int64  `json:"id_suscripcion"`
+	FechaCreacion  string `json:"fecha_creacion"`
+	NroTransaccion string `json:"nro_transaccion"`
+	IdPago         int64  `json:"id_pago"`
+	IdPlan         int64  `json:"id_plan"`
+	MontoPlan      int64  `json:"monto_plan"`
+	MontoMatricula int64  `json:"monto_matricula"`
+	NroCuotas      int    `json:"nro_cuotas"`
+	FechaTermino   string `json:"fecha_termino"`
+	IdEstado       int64  `json:"id_estado"`
+	IdSocio        string `json:"is_socio"`
 }
 
 type Suscripciones []Suscripcion
