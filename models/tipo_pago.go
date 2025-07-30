@@ -39,27 +39,33 @@ func (tpago *TipoPago) insert() {
 }
 
 // listar todos los registros
-func ListTipoPago() MediosPagos {
+func ListTipoPago() (MediosPagos, error) {
 	sql := "SELECT id_pago, descripcion, estado FROM db_grossgym_fitness.tipo_pago;"
 	tiposPagos := MediosPagos{}
-	rows, _ := db.Query(sql)
-
-	for rows.Next() {
-		tipoPago := TipoPago{}
-		rows.Scan(&tipoPago.IdPago, &tipoPago.Descripcion, &tipoPago.Estado)
-		tiposPagos = append(tiposPagos, tipoPago)
+	if rows, err := db.Query(sql); err != nil {
+		return nil, err
+	} else {
+		for rows.Next() {
+			tipoPago := TipoPago{}
+			rows.Scan(&tipoPago.IdPago, &tipoPago.Descripcion, &tipoPago.Estado)
+			tiposPagos = append(tiposPagos, tipoPago)
+		}
+		return tiposPagos, err
 	}
-	return tiposPagos
+
 }
 
-func GetTipoPago(id int) *TipoPago {
+func GetTipoPago(id int) (*TipoPago, error) {
 	tipoPago := NewTipoPago("", false)
 	sql := "SELECT id_pago, descripcion, estado FROM db_grossgym_fitness.tipo_pago WHERE id_pago=? ;"
-	rows, _ := db.Query(sql, id)
-	for rows.Next() {
-		rows.Scan(&tipoPago.IdPago, &tipoPago.Descripcion, &tipoPago.Estado)
+	if rows, err := db.Query(sql, id); err != nil {
+		return nil, err
+	} else {
+		for rows.Next() {
+			rows.Scan(&tipoPago.IdPago, &tipoPago.Descripcion, &tipoPago.Estado)
+		}
+		return tipoPago, err
 	}
-	return tipoPago
 
 }
 
