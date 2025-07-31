@@ -2,8 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
-	"go-mysql-gym/db"
 	"go-mysql-gym/models"
 	"net/http"
 	"strconv"
@@ -12,68 +10,84 @@ import (
 )
 
 func GetTiposPagos(rw http.ResponseWriter, r *http.Request) {
-	rw.Header().Set("Content-Type", "application/json")
-	db.Connect()
-	tiposPagos, _ := models.ListTipoPago()
-	db.Close()
-	output, _ := json.Marshal(tiposPagos)
-	fmt.Fprintln(rw, string(output))
+	if tiposPagos, err := models.ListTipoPago(); err != nil {
+		models.SendNoFound(rw)
+	} else {
+		models.SendData(rw, tiposPagos)
+	}
 }
 
 func GetTipoPgo(rw http.ResponseWriter, r *http.Request) {
-	rw.Header().Set("Content-Type", "application/json")
-	vars := mux.Vars(r)
-	id, _ := strconv.Atoi(vars["id"])
-	db.Connect()
-	tipoPago, _ := models.GetTipoPago(id)
-	db.Close()
-	if tipoPago.IdPago == 0 {
-		rw.WriteHeader(http.StatusNoContent)
-		fmt.Fprintln(rw, "")
+	if tipoPago, err := getTipoPagoByRequest(r); err != nil {
+		models.SendNoFound(rw)
 	} else {
-		output, _ := json.Marshal(tipoPago)
-		fmt.Fprintln(rw, string(output))
+		if tipoPago.IdPago == 0 {
+			models.SendNoFound(rw)
+		} else {
+			models.SendData(rw, tipoPago)
+		}
 	}
+	/*
+		rw.Header().Set("Content-Type", "application/json")
+		vars := mux.Vars(r)
+		id, _ := strconv.Atoi(vars["id"])
+		db.Connect()
+		tipoPago, _ := models.GetTipoPago(id)
+		db.Close()
+		if tipoPago.IdPago == 0 {
+			rw.WriteHeader(http.StatusNoContent)
+			fmt.Fprintln(rw, "")
+		} else {
+			output, _ := json.Marshal(tipoPago)
+			fmt.Fprintln(rw, string(output))
+		}
+	*/
 }
 
 func CreateTipoPago(rw http.ResponseWriter, r *http.Request) {
-	rw.Header().Set("Content-Type", "application/json")
 	tipoPago := models.TipoPago{}
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&tipoPago); err != nil {
-		fmt.Fprintln(rw, http.StatusUnprocessableEntity)
+		models.SendUnprocessableEntity(rw)
 	} else {
-		db.Connect()
 		tipoPago.Save()
-		db.Close()
+		models.SendData(rw, tipoPago)
 	}
-	output, _ := json.Marshal(tipoPago)
-	fmt.Fprintln(rw, string(output))
 }
 
 func UpdateTipoPago(rw http.ResponseWriter, r *http.Request) {
-	rw.Header().Set("Content-Type", "application/json")
+	var idTipoPago int64
+	if tipoPago, err := getTipoPagoByRequest(r); err != nil {
+		models.SendNoFound(rw)
+	} else {
+		idTipoPago = tipoPago.IdPago
+	}
 	tipoPago := models.TipoPago{}
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&tipoPago); err != nil {
-		fmt.Fprintln(rw, http.StatusUnprocessableEntity)
+		models.SendUnprocessableEntity(rw)
 	} else {
-		db.Connect()
+		tipoPago.IdPago = idTipoPago
 		tipoPago.Save()
-		db.Close()
+		models.SendData(rw, tipoPago)
 	}
-	output, _ := json.Marshal(tipoPago)
-	fmt.Fprintln(rw, string(output))
 }
 
 func DeleteTipoPago(rw http.ResponseWriter, r *http.Request) {
-	rw.Header().Set("Content-Type", "application/json")
+	if tipoPago, err := getTipoPagoByRequest(r); err != nil {
+		models.SendNoFound(rw)
+	} else {
+		tipoPago.Delete()
+		models.SendData(rw, tipoPago)
+	}
+}
+
+func getTipoPagoByRequest(r *http.Request) (models.TipoPago, error) {
 	vars := mux.Vars(r)
 	idTipoPago, _ := strconv.Atoi(vars["id"])
-	db.Connect()
-	tipoPago, _ := models.GetTipoPago(idTipoPago)
-	tipoPago.Delete()
-	db.Close()
-	output, _ := json.Marshal(tipoPago)
-	fmt.Fprintln(rw, string(output))
+	if tipoPago, err := models.GetTipoPago(idTipoPago); err != nil {
+		return *tipoPago, err
+	} else {
+		return *tipoPago, nil
+	}
 }
